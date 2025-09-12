@@ -1,0 +1,220 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Projects | SpøtLëss Dëv Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static "css/all_project.css" %}">
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo"><span class="span2">S</span>pøtLëss &nbsp;<span>Dëv</span></a>
+                <ul class="nav-links">
+                    <li><a href="{% url 'home' %}"><i class="fas fa-arrow-left"></i> Back to Portfolio</a></li>
+                </ul>
+                <div class="hamburger">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>All Projects</h1>
+            <p>Browse through my complete collection of work. Each project showcases different skills and technologies I've mastered over the years.</p>
+        </div>
+    </section>
+
+    <!-- Filters Section -->
+    <section class="filters-section">
+        <div class="container">
+            <div class="filters-container">
+                <div class="filter-group">
+                    <button class="filter-btn active" data-filter="all">All Projects</button>
+                    <button class="filter-btn" data-filter="web">Web Design</button>
+                    <button class="filter-btn" data-filter="app">App Development</button>
+                    <button class="filter-btn" data-filter="ecom">E-Commerce</button>
+                    <button class="filter-btn" data-filter="uiux">UI/UX Design</button>
+                </div>
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search projects...">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Grid -->
+    <section class="projects-section">
+        <div class="container">
+            <div class="projects-grid">
+                {% for project in page_obj %}
+                <div class="project-card visible" data-category="{{ project.category }}">
+                    <div class="project-image">
+                        <img src="{{ project.image.url }}" alt="{{ project.title }}">
+                    </div>
+                    <div class="project-content">
+                        <div class="project-tags">
+                            {% for tech in project.get_technologies_list %}
+                                <span class="tag">{{ tech }}</span>
+                            {% endfor %}
+                        </div>
+
+                        <h3>{{ project.title }}</h3>
+                        <p>{{ project.description|truncatechars:150 }}</p>
+                        <div class="project-meta">
+                            <span class="project-date">{{ project.created_at|date:"M Y" }}</span>
+                            {% if project.project_url %}
+                            <a href="{{ project.project_url }}" class="project-link" target="_blank">View Project <i class="fas fa-arrow-right"></i></a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            
+            <!-- Pagination -->
+            <div class="pagination">
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}" class="page-btn">
+                        <i class="fas fa-chevron-left"></i>
+                    </a>
+                {% else %}
+                    <span class="page-btn disabled"><i class="fas fa-chevron-left"></i></span>
+                {% endif %}
+
+                {% for page_num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == page_num %}
+                        <span class="page-btn active">{{ page_num }}</span>
+                    {% else %}
+                        <a href="?page={{ page_num }}" class="page-btn">{{ page_num }}</a>
+                    {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}" class="page-btn">
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                {% else %}
+                    <span class="page-btn disabled"><i class="fas fa-chevron-right"></i></span>
+                {% endif %}
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+   <footer>
+        <div class="container">
+            <div class="social-links">
+                <a href="https://github.com/Priest0011"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/priest-chidubem-a7a6a1322?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="https://wa.me/2349045878503"><i class="fa-brands fa-whatsapp"></i></i></a>
+            </div>
+            <p class="copyright">© 2025 SpøtLëss Dëv Portfolio. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Back to Portfolio Button -->
+    <a href="{% url 'home' %}   " class="back-btn">
+        <i class="fas fa-arrow-left"></i> Back to Portfolio
+    </a>
+
+    <script>
+    // Mobile Navigation Toggle
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+    
+    hamburger.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+        hamburger.innerHTML = navLinks.classList.contains('active') ? 
+            '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+    });
+
+    // Filter + Search Logic
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const searchInput = document.querySelector('.search-box input');
+    const projectCards = document.querySelectorAll('.project-card');
+
+    let activeFilter = 'all';
+
+    const filterProjects = () => {
+        const searchTerm = searchInput.value.toLowerCase();
+
+        projectCards.forEach(card => {
+            const title = card.querySelector('h3').textContent.toLowerCase();
+            const description = card.querySelector('p').textContent.toLowerCase();
+            const tags = card.querySelector('.project-tags').textContent.toLowerCase();
+            const category = card.getAttribute('data-category');
+
+            const matchesSearch = title.includes(searchTerm) || description.includes(searchTerm) || tags.includes(searchTerm);
+            const matchesFilter = activeFilter === 'all' || category === activeFilter;
+
+            if (matchesSearch && matchesFilter) {
+                card.style.display = 'flex';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    };
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            activeFilter = btn.getAttribute('data-filter');
+            filterProjects();
+        });
+    });
+
+    searchInput.addEventListener('input', filterProjects);
+
+    // Pagination button styling (non-functional if Django handles backend pagination)
+    const pageBtns = document.querySelectorAll('.page-btn:not(.disabled)');
+    pageBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            if (!this.classList.contains('active') && !this.classList.contains('disabled')) {
+                document.querySelector('.page-btn.active')?.classList.remove('active');
+                this.classList.add('active');
+            }
+        });
+    });
+
+    // Animation on scroll
+    const animateOnScroll = () => {
+        const hiddenCards = document.querySelectorAll('.project-card:not(.visible)');
+        hiddenCards.forEach(card => {
+            const cardTop = card.getBoundingClientRect().top;
+            const threshold = 150;
+            if (cardTop < window.innerHeight - threshold) {
+                card.classList.add('visible');
+            }
+        });
+    };
+
+    // Initial animation
+    document.querySelectorAll('.project-card').forEach((card, index) => {
+        if (index < 6) {
+            card.classList.add('visible');
+        } else {
+            card.style.transitionDelay = `${(index - 6) * 0.1}s`;
+        }
+    });
+
+    window.addEventListener('scroll', animateOnScroll);
+    window.addEventListener('load', animateOnScroll);
+</script>
+
+</body>
+</html>

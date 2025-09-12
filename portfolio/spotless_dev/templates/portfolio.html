@@ -1,0 +1,352 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpøtLëss Dëv Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <link rel="icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static "css/portfolio.css" %}">
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header id="header">
+        <div class="container">
+            <nav>
+
+                <a href="#" class="logo"><span class="span2">S</span>pøtLëss &nbsp;<span>Dëv</span></a>
+                
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#portfolio">Portfolio</a></li>
+                    <li><a href="#blog">Blog</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <div class="hamburger">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+   
+    <!-- Hero Section with Auto-Typing -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1>I'm a <span class="typed-text"></span></h1>
+                <p>
+                As a web developer, I design and build modern, responsive websites with clean, scalable code and a strong focus on user experience. I combine Django with front-end technologies like HTML, CSS, and JavaScript to craft fast, creative, and accessible digital experiences.
+                </p>
+                <div class="hero-btns">
+                    <a href="#portfolio" class="btn">View My Work</a>
+                    <a href="#contact" class="btn btn-outline">Hire Me</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="{% static 'img/download.jpeg' %}" alt="Developer" loading="lazy">
+            </div>
+        </div>
+    </section>
+  
+    {% if messages %}
+    <div class="message-container">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>About Me</h2>
+                <div class="divider"></div>
+            </div>
+            <div class="about-content">
+                <div class="about-image">
+                    {% for about in abouts %}
+                    <img src="{{ about.image.url }}" alt="Spotless">
+                    {% endfor %}
+                </div>
+                <div class="about-text">
+                    <h3>Professional Web Developer</h3>
+                    <p>
+                    I'm a passionate web developer with over 3 years of experience building modern, responsive websites and web applications. My journey started with HTML, CSS, and JavaScript, and has grown to include Django and other powerful web technologies.
+                    </p>
+                    <p>
+                    I specialize in crafting intuitive user interfaces and dynamic web experiences with clean, efficient code. My approach blends technical expertise with a sharp eye for design to create fast, user-centered, and accessible digital solutions.
+                    </p>
+
+                    <div class="info-list">
+                        <div class="info-item">
+                            <strong>Name:</strong>
+                            <span>Kingsley Spotless</span>
+                        </div>
+                        <div class="info-item">
+                            <strong>Email:</strong>
+                            <span>chidubempriest.com</span>
+                        </div>
+                        <div class="info-item">
+                            <strong>Phone:</strong>
+                            <span>+234 (815) 577-8649</span>
+                        </div>
+                        <div class="info-item">
+                            <strong>Location:</strong>
+                            <span>Enugu State, &nbsp; Nigeria</span>
+                        </div>
+                    </div>
+                    
+                    <a href="#" class="btn">Download CV</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="container">
+            <div class="section-title">
+                <h2>My Services</h2>
+                <div class="divider"></div>
+            </div>
+            <div class="services-grid">
+                <!-- Web Development -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Web Development</h3>
+                    <p>
+                        Custom websites and full-stack web applications built using Django, JavaScript, and HTML/CSS — optimized for performance and scalability.
+                    </p>
+                </div>
+
+                <!-- Responsive Design -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Responsive Design</h3>
+                    <p>
+                        Mobile-first layouts that adapt smoothly across all devices to ensure excellent user experience everywhere.
+                    </p>
+                </div>
+
+                <!-- Backend Development -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <h3>Backend Development</h3>
+                    <p>
+                        Robust and secure server-side development using Django and Python — including databases, authentication, and admin features.
+                    </p>
+                </div>
+
+                <!-- E-Commerce Solutions -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <h3>E-Commerce Solutions</h3>
+                    <p>
+                        Scalable online stores with secure payment integration, product management, and a seamless shopping experience.
+                    </p>
+                </div>
+
+                <!-- API Integration -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-plug"></i>
+                    </div>
+                    <h3>API Integration</h3>
+                    <p>
+                        Connect your site to third-party services like Paystack, social platforms, or external data sources using secure REST APIs.
+                    </p>
+                </div>
+
+                <!-- Website Maintenance -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3>Website Maintenance</h3>
+                    <p>
+                        Ongoing support, updates, bug fixes, and content changes to keep your website running smoothly and securely over time.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Portfolio Section -->
+    <section class="portfolio" id="portfolio">
+        <div class="container">
+            <div class="section-title">
+                <h2>My Portfolio</h2>
+                <div class="divider"></div>
+            </div>
+            
+            <div class="portfolio-filters">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="web">Web Design</button>
+                <button class="filter-btn" data-filter="app">Backend</button>
+                <button class="filter-btn" data-filter="brand">The Best</button>
+            </div>
+            
+            <!-- Portfolio Grid Start -->
+            <div class="portfolio-grid">
+                {% for project in projects %}
+                <div class="portfolio-item" data-category="{{ project.category }}">
+                    <img src="{{ project.image.url }}" alt="{{ project.title }}">
+                    <div class="portfolio-overlay">
+                        <h3>{{ project.title }}</h3>
+                        <p>{{ project.description }}</p>
+                        {% if project.project_url %}
+                        <a href="{{ project.project_url }}" class="btn">View Project</a>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <!-- Portfolio Grid End -->
+
+            <div class="view-more-btn-container" style="text-align:center; margin-top: 30px;">
+                <a href="{% url 'projects'%}" class="btn">View All Projects</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section class="blog" id="blog">
+        <div class="container">
+            <div class="section-title">
+                <h2>Latest Blog</h2>
+                <div class="divider"></div>
+            </div>
+            
+            <div class="blog-grid">
+                {% for blog in blogs %}
+                <div class="blog-card">
+                    <div class="blog-image">
+                        <img src="{{ blog.image.url }}" alt="{{ blog.title }}">
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span><i class="far fa-calendar"></i> {{ blog.created_at|date:"F d, Y" }}</span>
+                            <span><i class="far fa-user"></i> {{ blog.author }}</span>
+                        </div>
+                        <h3>{{ blog.title }}</h3>
+                        <p>{{ blog.summary }}</p>
+                        <a href="#" class="blog-link">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Contact Me</h2>
+                <div class="divider"></div>
+            </div>
+            
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Get In Touch</h3>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h4>Location</h4>
+                            <p>Enugu State, &nbsp Nigeria</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4>Email</h4>
+                            <p>chidubempriest.com.</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h4>Phone</h4>
+                            <p>+234 (815) 577-8649</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <h4>Working Hours</h4>
+                            <p>Mon-Fri: 9AM - 6PM</p>
+                        </div>
+                    </div>
+                </div>
+                
+               <div class="contact-form">
+                    <h3>Send a Message</h3>
+                    <br>
+                    
+
+                    <form method="POST" action="">
+                        {% csrf_token %}
+                        {{ form.non_field_errors }}
+
+                        <div class="form-group">
+                            {{ form.name }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.email }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.phone_number }}  <!-- 👈 Add this -->
+                        </div>
+                        <div class="form-group">
+                            {{ form.message }}
+                        </div>
+
+                        <button type="submit" class="btn">Send Message</button>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="social-links">
+                <a href="https://github.com/Priest0011"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/priest-chidubem-a7a6a1322?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="https://wa.me/2349045878503"><i class="fa-brands fa-whatsapp"></i></i></a>
+            </div>
+            <p class="copyright">© 2025 SpøtLëss Dëv Portfolio. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+<script src="{% static "js/script.js" %}"></script>
+ <audio id="bg-music" loop>
+    <source src="lazy-day-stylish-futuristic-chill-239287.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+</body>
+
+
+</html>
