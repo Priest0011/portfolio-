@@ -1,0 +1,413 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpøtLëss Dëv Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'css/portfolio.css' %}">
+<base target="_blank">
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-trail"></div>
+
+    <!-- Scroll Progress -->
+    <div class="scroll-progress"></div>
+
+    <!-- Noise Overlay -->
+    <div class="noise"></div>
+
+    <!-- Particle Canvas -->
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <a href="#" class="logo"><span class="logo-s">S</span>pøtLëss &nbsp;<span>Dëv</span></a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#blog">Blog</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="dot"></span>
+                Available for freelance work
+            </div>
+            <h1>
+                I'm a <span class="gradient-text" id="scramble-text">Developer</span>
+            </h1>
+            <p>
+                As a web developer, I design and build modern, responsive websites with clean, 
+                scalable code and a strong focus on user experience. I combine Django with front-end 
+                technologies like HTML, CSS, and JavaScript to craft fast, creative, and accessible 
+                digital experiences.
+            </p>
+            <div class="hero-btns">
+                <a href="#portfolio" class="btn btn-primary">
+                    View My Work
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+                <a href="#contact" class="btn btn-outline">Hire Me</a>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <span>Scroll</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    {% if messages %}
+    <div class="message-container">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="section-header reveal">
+                <div class="section-label">About Me</div>
+                <h2 class="section-title">Turning ideas into<br>digital reality</h2>
+            </div>
+            <div class="about-grid">
+                <div class="about-image reveal">
+                    <div class="about-image-wrapper">
+                        {% for about in abouts %}
+                        <img src="{{ about.image.url }}" alt="Spotless">
+                        {% endfor %}
+                    </div>
+                    <div class="about-stats">
+                        <div class="stat-card">
+                            <div class="stat-number" data-target="3">0</div>
+                            <div class="stat-label">Years Experience</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" data-target="50">0</div>
+                            <div class="stat-label">Projects Done</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" data-target="30">0</div>
+                            <div class="stat-label">Happy Clients</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" data-target="99">0</div>
+                            <div class="stat-label">% Satisfaction</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-text reveal">
+                    <h3>Professional Web Developer</h3>
+                    <p>
+                        I'm a passionate web developer with over 3 years of experience building modern, 
+                        responsive websites and web applications. My journey started with HTML, CSS, and 
+                        JavaScript, and has grown to include Django and other powerful web technologies.
+                    </p>
+                    <p>
+                        I specialize in crafting intuitive user interfaces and dynamic web experiences 
+                        with clean, efficient code. My approach blends technical expertise with a sharp 
+                        eye for design to create fast, user-centered, and accessible digital solutions.
+                    </p>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <strong>Name</strong>
+                            <span>Kingsley Spotless</span>
+                        </div>
+                        <div class="info-item">
+                            <strong>Email</strong>
+                            <span>chidubempriest.com</span>
+                        </div>
+                        <div class="info-item">
+                            <strong>Phone</strong>
+                            <span>+234 (815) 577-8649</span>
+                        </div>
+                        <div class="info-item">
+                            <strong>Location</strong>
+                            <span>Enugu State, Nigeria</span>
+                        </div>
+                    </div>
+                    <a href="#" class="btn btn-primary">Download CV</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="skills" id="skills">
+        <div class="container">
+            <div class="section-header reveal">
+                <div class="section-label">My Stack</div>
+                <h2 class="section-title">Tools I use to<br>bring ideas to life</h2>
+            </div>
+            <div class="skills-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 28px;">
+                {% for skill in skills %}
+                <div class="skill-item reveal" style="display: flex; flex-direction: column; gap: 10px;">
+                    <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                        <span style="font-weight: 600;">{{ skill.name }}</span>
+                        <span style="opacity: 0.7; font-size: 0.9rem;">{{ skill.proficiency }}%</span>
+                    </div>
+                    <div style="width: 100%; height: 8px; border-radius: 100px; background: rgba(255,255,255,0.08); overflow: hidden;">
+                        <div style="width: {{ skill.proficiency }}%; height: 100%; border-radius: 100px; background: linear-gradient(90deg, var(--primary, #ff3366), var(--secondary, #00d4ff));"></div>
+                    </div>
+                </div>
+                {% empty %}
+                <p style="opacity: 0.6;">Skills coming soon.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="container">
+            <div class="section-header reveal">
+                <div class="section-label">What I Do</div>
+                <h2 class="section-title">Services built for<br>the modern web</h2>
+            </div>
+            <div class="services-grid">
+                <div class="service-card reveal" data-tilt>
+                    <div class="service-icon"><i class="fas fa-code"></i></div>
+                    <h3>Web Development</h3>
+                    <p>Custom websites and full-stack web applications built using Django, JavaScript, and HTML/CSS — optimized for performance and scalability.</p>
+                </div>
+                <div class="service-card reveal" data-tilt>
+                    <div class="service-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <h3>Responsive Design</h3>
+                    <p>Mobile-first layouts that adapt smoothly across all devices to ensure excellent user experience everywhere.</p>
+                </div>
+                <div class="service-card reveal" data-tilt>
+                    <div class="service-icon"><i class="fas fa-server"></i></div>
+                    <h3>Backend Development</h3>
+                    <p>Robust and secure server-side development using Django and Python — including databases, authentication, and admin features.</p>
+                </div>
+                <div class="service-card reveal" data-tilt>
+                    <div class="service-icon"><i class="fas fa-shopping-cart"></i></div>
+                    <h3>E-Commerce Solutions</h3>
+                    <p>Scalable online stores with secure payment integration, product management, and a seamless shopping experience.</p>
+                </div>
+                <div class="service-card reveal" data-tilt>
+                    <div class="service-icon"><i class="fas fa-plug"></i></div>
+                    <h3>API Integration</h3>
+                    <p>Connect your site to third-party services like Paystack, social platforms, or external data sources using secure REST APIs.</p>
+                </div>
+                <div class="service-card reveal" data-tilt>
+                    <div class="service-icon"><i class="fas fa-tools"></i></div>
+                    <h3>Website Maintenance</h3>
+                    <p>Ongoing support, updates, bug fixes, and content changes to keep your website running smoothly and securely over time.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- Portfolio Section (replace your whole old portfolio <section>) -->
+    <section class="portfolio" id="portfolio">
+        <div class="container">
+            <div class="section-header reveal">
+                <div class="section-label">My Work</div>
+                <h2 class="section-title">Featured projects<br>that stand out</h2>
+            </div>
+            <div class="portfolio-filters reveal">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="web">Web Design</button>
+                <button class="filter-btn" data-filter="app">Backend</button>
+                <button class="filter-btn" data-filter="brand">The Best</button>
+            </div>
+
+            <div class="portfolio-grid" id="portfolioGrid">
+                {% for project in projects %}
+                <article class="portfolio-item project-card visible"
+                         data-category="{{ project.category }}"
+                         data-title="{{ project.title }}"
+                         data-image="{% if project.image %}{{ project.image.url }}{% endif %}"
+                         data-url="{{ project.project_url|default:'' }}"
+                         data-tech="{{ project.technologies|default:'' }}"
+                         tabindex="0" role="button"
+                         aria-label="View details for {{ project.title }}">
+                    <div class="project-thumb">
+                        {% if project.image %}
+                        <img src="{{ project.image.url }}" alt="{{ project.title }}" loading="lazy">
+                        {% endif %}
+                        <span class="portfolio-tag">{{ project.category }}</span>
+                    </div>
+                    <div class="project-body">
+                        <h3>{{ project.title }}</h3>
+                        <p class="project-summary">{{ project.description }}</p>
+                        <span class="project-more">View details <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                    <!-- Full write-up shown in the modal. Falls back to the short description
+                         until you add a long_description field to your model. -->
+                    <div class="project-extra" hidden>{{ project.long_description|default:project.description|linebreaks }}</div>
+                </article>
+                {% empty %}
+                <p style="opacity:.6;">Projects coming soon.</p>
+                {% endfor %}
+            </div>
+
+            <div style="text-align:center; margin-top: 50px;" class="reveal">
+                <a href="{% url 'projects' %}" class="btn btn-outline">View All Projects</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project details modal (put this right after the portfolio section) -->
+    <div class="project-modal" id="projectModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true">
+        <div class="project-modal-backdrop" data-close></div>
+        <div class="project-modal-dialog">
+            <button class="modal-close" type="button" aria-label="Close project details" data-close>
+                <i class="fas fa-xmark"></i>
+            </button>
+            <div class="modal-media" id="modalMedia">
+                <img id="modalImage" src="" alt="">
+            </div>
+            <div class="modal-body">
+                <span class="modal-category" id="modalCategory"></span>
+                <h3 id="modalTitle"></h3>
+                <div class="modal-desc" id="modalDesc"></div>
+                <div class="modal-tech-wrap" id="modalTechWrap">
+                    <h4>Built with</h4>
+                    <ul class="tech-list" id="modalTech"></ul>
+                </div>
+                <div class="modal-actions">
+                    <a href="#" class="btn btn-primary" id="modalLink" target="_blank" rel="noopener noreferrer">
+                        Visit live site <i class="fas fa-arrow-up-right-from-square"></i>
+                    </a>
+                    <button type="button" class="btn btn-outline" data-close>Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Blog Section -->
+    <section class="blog" id="blog">
+        <div class="container">
+            <div class="section-header reveal">
+                <div class="section-label">Latest Posts</div>
+                <h2 class="section-title">Thoughts on code,<br>design & tech</h2>
+            </div>
+            <div class="blog-grid">
+                {% for blog in blogs %}
+                <article class="blog-card reveal">
+                    <div class="blog-image">
+                        <img src="{{ blog.image.url }}" alt="{{ blog.title }}">
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span><i class="far fa-calendar"></i> {{ blog.created_at|date:"F d, Y" }}</span>
+                            <span><i class="far fa-user"></i> {{ blog.author }}</span>
+                        </div>
+                        <h3>{{ blog.title }}</h3>
+                        <p>{{ blog.summary }}</p>
+                        <a href="#" class="blog-link">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="section-header reveal">
+                <div class="section-label">Get In Touch</div>
+                <h2 class="section-title">Let's build something<br>amazing together</h2>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-info reveal">
+                    <h3>Get In Touch</h3>
+                    <div class="contact-item">
+                        <div class="icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <div>
+                            <h4>Location</h4>
+                            <p>Enugu State, Nigeria</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="icon"><i class="fas fa-envelope"></i></div>
+                        <div>
+                            <h4>Email</h4>
+                            <p>chidubempriest.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="icon"><i class="fas fa-phone"></i></div>
+                        <div>
+                            <h4>Phone</h4>
+                            <p>+234 (815) 577-8649</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="icon"><i class="fas fa-clock"></i></div>
+                        <div>
+                            <h4>Working Hours</h4>
+                            <p>Mon-Fri: 9AM - 6PM</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form reveal">
+                    <h3>Send a Message</h3>
+                    <form method="POST" action="" id="contactForm">
+                        {% csrf_token %}
+                        {{ form.non_field_errors }}
+                        <div class="form-group">
+                            {{ form.name }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.email }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.phone_number }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.message }}
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">
+                            Send Message
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="social-links">
+                <a href="https://github.com/Priest0011" title="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/priest-chidubem-a7a6a1322" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://wa.me/2349045878503" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            </div>
+            <p class="copyright">© 2025 SpøtLëss Dëv Portfolio. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

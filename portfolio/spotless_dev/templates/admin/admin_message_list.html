@@ -1,0 +1,63 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}Messages{% endblock %}
+
+{% block content %}
+    <div class="page-header">
+        <div>
+            <h1>Messages</h1>
+            <p>Messages sent through your portfolio contact form.</p>
+        </div>
+    </div>
+
+    <form method="get" class="search-bar">
+        <input type="text" name="q" class="search-input" placeholder="Search by name, email or message..." value="{{ request.GET.q }}">
+        <button type="submit" class="btn btn-secondary"><i class="fas fa-search"></i> Search</button>
+    </form>
+
+    <div class="panel">
+        <div class="panel-header">
+            <h2><i class="fas fa-envelope"></i> Inbox</h2>
+            <span style="color: var(--text-muted); font-size: 0.85rem;">{{ paginator.count }} message{{ paginator.count|pluralize }}</span>
+        </div>
+        <div style="overflow-x: auto;">
+            <table class="dashboard-table table-stack">
+                <thead>
+                    <tr>
+                        <th>From</th>
+                        <th>Message</th>
+                        <th>Received</th>
+                        <th style="text-align: right;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for contact in contacts %}
+                    <tr>
+                        <td class="cell-primary">
+                            <strong>{{ contact.name }}</strong>
+                            <div class="cell-muted">{{ contact.email }}</div>
+                        </td>
+                        <td class="cell-muted" data-label="Message">{{ contact.message|truncatechars:70 }}</td>
+                        <td class="cell-muted" data-label="Received">{{ contact.sent_at|date:"M d, Y H:i" }}</td>
+                        <td class="cell-actions" data-label="">
+                            <a href="{% url 'admin_message_detail' contact.id %}" title="Read"><i class="fas fa-eye"></i></a>
+                            <a href="{% url 'admin_message_delete' contact.id %}" class="delete" title="Delete"><i class="fas fa-trash"></i></a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4">
+                            <div class="empty-state">
+                                <i class="fas fa-envelope-open"></i>
+                                <h3>No messages</h3>
+                                <p>New contact-form messages will show up here.</p>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {% include "admin/_pagination.html" %}
+{% endblock %}

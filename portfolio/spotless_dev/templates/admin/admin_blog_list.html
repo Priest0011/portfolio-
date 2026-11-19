@@ -1,0 +1,77 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}Blog Posts{% endblock %}
+
+{% block content %}
+    <div class="page-header">
+        <div>
+            <h1>Blog Posts</h1>
+            <p>Write, edit and publish articles.</p>
+        </div>
+        <a href="{% url 'admin_blog_add' %}" class="btn btn-primary"><i class="fas fa-plus"></i> New Post</a>
+    </div>
+
+    <form method="get" class="search-bar">
+        <input type="text" name="q" class="search-input" placeholder="Search posts by title, author or summary..." value="{{ request.GET.q }}">
+        <button type="submit" class="btn btn-secondary"><i class="fas fa-search"></i> Search</button>
+    </form>
+
+    <div class="panel">
+        <div class="panel-header">
+            <h2><i class="fas fa-pen-nib"></i> All Posts</h2>
+            <span style="color: var(--text-muted); font-size: 0.85rem;">{{ paginator.count }} post{{ paginator.count|pluralize }}</span>
+        </div>
+        <div style="overflow-x: auto;">
+            <table class="dashboard-table table-stack">
+                <thead>
+                    <tr>
+                        <th>Post</th>
+                        <th>Author</th>
+                        <th>Published</th>
+                        <th style="text-align: right;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for blog in blogs %}
+                    <tr>
+                        <td class="cell-primary">
+                            <div class="cell-media">
+                                {% if blog.image %}
+                                <img src="{{ blog.image.url }}" alt="" class="project-thumb">
+                                {% else %}
+                                <div class="project-thumb" style="display: flex; align-items: center; justify-content: center;">
+                                    <i class="fas fa-image" style="color: var(--text-muted);"></i>
+                                </div>
+                                {% endif %}
+                                <div>
+                                    <strong>{{ blog.title }}</strong>
+                                    <div class="cell-muted">{{ blog.summary|truncatechars:80 }}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="cell-muted" data-label="Author">{{ blog.author }}</td>
+                        <td class="cell-muted" data-label="Published">{{ blog.created_at|date:"M d, Y" }}</td>
+                        <td class="cell-actions" data-label="">
+                            <a href="{% url 'admin_blog_edit' blog.id %}" title="Edit"><i class="fas fa-edit"></i></a>
+                            <a href="{% url 'admin_blog_delete' blog.id %}" class="delete" title="Delete"><i class="fas fa-trash"></i></a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4">
+                            <div class="empty-state">
+                                <i class="fas fa-pen-nib"></i>
+                                <h3>No posts yet</h3>
+                                <p>Share your first article with the world.</p>
+                                <br>
+                                <a href="{% url 'admin_blog_add' %}" class="btn btn-primary"><i class="fas fa-plus"></i> New Post</a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {% include "admin/_pagination.html" %}
+{% endblock %}

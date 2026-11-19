@@ -1,0 +1,57 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block nav_projects %}active{% endblock %}
+
+{% block content %}
+    <div class="page-header">
+        <div>
+            <h1>{{ title }}</h1>
+            <p>{% if project %}Update the details for this project.{% else %}Add a new project to your portfolio.{% endif %}</p>
+        </div>
+        <a href="{% url 'admin_project_list' %}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back to Projects</a>
+    </div>
+
+    <div class="form-card">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            {% if project and project.image %}
+            <div class="current-image">
+                <img src="{{ project.image.url }}" alt="">
+                <span class="cell-muted">Current image</span>
+            </div>
+            {% endif %}
+
+            {% for field in form %}
+            <div class="form-group {% if field.field.widget.input_type == 'checkbox' %}form-check{% endif %}">
+                {% if field.field.widget.input_type == 'checkbox' %}
+                    {{ field }}
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {% else %}
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                {% endif %}
+                {% if field.help_text %}
+                <div class="cell-muted" style="margin-top: 6px;">{{ field.help_text }}</div>
+                {% endif %}
+                {% if field.errors %}
+                <ul class="errorlist">
+                    {% for error in field.errors %}<li>{{ error }}</li>{% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+            {% endfor %}
+
+            {% if form.non_field_errors %}
+            <ul class="errorlist">
+                {% for error in form.non_field_errors %}<li>{{ error }}</li>{% endfor %}
+            </ul>
+            {% endif %}
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary"><i class="fas fa-check"></i> {% if project %}Save Changes{% else %}Add Project{% endif %}</button>
+                <a href="{% url 'admin_project_list' %}" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+{% endblock %}

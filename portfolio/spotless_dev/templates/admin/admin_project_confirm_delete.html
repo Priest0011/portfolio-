@@ -1,0 +1,22 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}Delete {{ object_type|capfirst }}{% endblock %}
+
+{% block content %}
+    <div class="page-header">
+        <div>
+            <h1>Delete {{ object_type|capfirst }}</h1>
+            <p>This action cannot be undone.</p>
+        </div>
+    </div>
+
+    <div class="confirm-card">
+        <i class="fas fa-trash"></i>
+        <h2>Delete “{{ label }}”?</h2>
+        <p>Are you sure you want to permanently delete this {{ object_type }}?</p>
+        <form method="post" class="confirm-actions">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i> Yes, delete</button>
+            <a href="{% url cancel_url %}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+{% endblock %}

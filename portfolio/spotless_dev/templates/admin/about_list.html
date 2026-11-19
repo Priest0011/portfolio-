@@ -1,0 +1,39 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}About{% endblock %}
+
+{% block content %}
+    <div class="page-header">
+        <div>
+            <h1>About</h1>
+            <p>Manage the images shown in your About section.</p>
+        </div>
+        <a href="{% url 'admin_about_add' %}" class="btn btn-primary"><i class="fas fa-plus"></i> Add Image</a>
+    </div>
+
+    {% if abouts %}
+    <div class="media-grid">
+        {% for about in abouts %}
+        <div class="panel media-card">
+            <img src="{{ about.image.url }}" alt="About image" loading="lazy">
+            <div class="media-meta cell-actions">
+                <span class="cell-muted">Image #{{ about.pk }}</span>
+                <span>
+                    <a href="{% url 'admin_about_edit' about.id %}" title="Replace"><i class="fas fa-edit"></i></a>
+                    <a href="{% url 'admin_about_delete' about.id %}" class="delete" title="Delete"><i class="fas fa-trash"></i></a>
+                </span>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="panel">
+        <div class="empty-state">
+            <i class="fas fa-user"></i>
+            <h3>No About image yet</h3>
+            <p>Upload a photo for your About section.</p>
+            <br>
+            <a href="{% url 'admin_about_add' %}" class="btn btn-primary"><i class="fas fa-plus"></i> Add Image</a>
+        </div>
+    </div>
+    {% endif %}
+{% endblock %}

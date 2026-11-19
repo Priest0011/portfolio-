@@ -1,0 +1,90 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}Projects{% endblock %}
+{% block nav_projects %}active{% endblock %}
+
+{% block content %}
+    <div class="page-header">
+        <div>
+            <h1>Projects</h1>
+            <p>Manage your portfolio projects and case studies.</p>
+        </div>
+        <a href="{% url 'admin_project_add' %}" class="btn btn-primary"><i class="fas fa-plus"></i> Add Project</a>
+    </div>
+
+    <form method="get" class="search-bar">
+        <input type="text" name="q" class="search-input" placeholder="Search projects by title, category, or technology..." value="{{ request.GET.q }}">
+        <button type="submit" class="btn btn-secondary"><i class="fas fa-search"></i> Search</button>
+    </form>
+
+    <div class="panel">
+        <div class="panel-header">
+            <h2><i class="fas fa-folder-open"></i> All Projects</h2>
+            <span class="cell-muted">{{ paginator.count }} project{{ paginator.count|pluralize }}</span>
+        </div>
+        <table class="dashboard-table table-stack">
+            <thead>
+                <tr>
+                    <th>Project</th>
+                    <th>Category</th>
+                    <th>Technologies</th>
+                    <th>Live Link</th>
+                    <th>Date</th>
+                    <th style="text-align: right;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for project in projects %}
+                <tr>
+                    <td class="cell-primary">
+                        <div class="cell-media">
+                            {% if project.image %}
+                            <img src="{{ project.image.url }}" alt="" class="project-thumb" loading="lazy">
+                            {% else %}
+                            <div class="project-thumb" style="display: flex; align-items: center; justify-content: center;">
+                                <i class="fas fa-image" style="color: var(--text-muted);"></i>
+                            </div>
+                            {% endif %}
+                            <strong>{{ project.title }}</strong>
+                        </div>
+                    </td>
+                    <td data-label="Category"><span class="category-tag {{ project.category }}">{{ project.get_category_display }}</span></td>
+                    <td data-label="Tech">
+                        <div class="tech-list">
+                            {% for tech in project.get_technologies_list %}<span class="tech-tag">{{ tech }}</span>{% endfor %}
+                        </div>
+                    </td>
+                    <td data-label="Live Link">
+                        {% if project.project_url %}
+                        <span class="badge badge-success"><i class="fas fa-link"></i> Live</span>
+                        {% else %}
+                        <span class="cell-muted">—</span>
+                        {% endif %}
+                    </td>
+                    <td class="cell-muted" data-label="Date">{{ project.created_at|date:"M d, Y" }}</td>
+                    <td class="cell-actions" data-label="">
+                        <a href="{% url 'admin_project_edit' project.id %}" title="Edit"><i class="fas fa-edit"></i></a>
+                        {% if project.project_url %}
+                        <a href="{{ project.project_url }}" target="_blank" rel="noopener" title="View Live"><i class="fas fa-external-link-alt"></i></a>
+                        {% endif %}
+                        <a href="{% url 'admin_project_delete' project.id %}" class="delete" title="Delete"><i class="fas fa-trash"></i></a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6">
+                        <div class="empty-state">
+                            <i class="fas fa-folder-open"></i>
+                            <h3>No projects yet</h3>
+                            <p>Get started by adding your first portfolio project.</p>
+                            <br>
+                            <a href="{% url 'admin_project_add' %}" class="btn btn-primary"><i class="fas fa-plus"></i> Add Project</a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% include "admin/_pagination.html" %}
+{% endblock %}

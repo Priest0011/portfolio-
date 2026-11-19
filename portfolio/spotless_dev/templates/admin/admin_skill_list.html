@@ -1,0 +1,45 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}Skills{% endblock %}
+
+{% block content %}
+    <div class="page-header">
+        <div>
+            <h1>Skills</h1>
+            <p>Manage your technical skills and proficiencies.</p>
+        </div>
+        <a href="{% url 'admin_skill_add' %}" class="btn btn-primary"><i class="fas fa-plus"></i> Add Skill</a>
+    </div>
+
+    {% if skills %}
+    <div class="skills-grid">
+        {% for skill in skills %}
+        <div class="skill-card">
+            <div class="skill-header">
+                <div class="skill-icon"><i class="fas fa-code"></i></div>
+                <div class="skill-actions">
+                    <a href="{% url 'admin_skill_edit' skill.id %}" title="Edit"><i class="fas fa-edit"></i></a>
+                    <a href="{% url 'admin_skill_delete' skill.id %}" class="delete" title="Delete"><i class="fas fa-trash"></i></a>
+                </div>
+            </div>
+            <div class="skill-name">{{ skill.name }}</div>
+            <div class="skill-meta">
+                <span><i class="fas fa-chart-line"></i> {{ skill.proficiency }}%</span>
+            </div>
+            <div class="proficiency-bar">
+                <div class="proficiency-fill" style="width: {{ skill.proficiency }}%"></div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="panel">
+        <div class="empty-state">
+            <i class="fas fa-bolt"></i>
+            <h3>No skills yet</h3>
+            <p>Add your first skill to showcase your expertise.</p>
+            <br>
+            <a href="{% url 'admin_skill_add' %}" class="btn btn-primary"><i class="fas fa-plus"></i> Add Skill</a>
+        </div>
+    </div>
+    {% endif %}
+{% endblock %}
